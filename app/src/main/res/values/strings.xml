@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">MyAnimation</string>
+    <string name="title_activity_frame_animation">FrameAnimationActivity</string>
+</resources>
