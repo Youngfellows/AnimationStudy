@@ -19,4 +19,11 @@ public class MainActivity extends AppCompatActivity {
         intent.setClass(this, FrameAnimationActivity.class);
         startActivity(intent);
     }
+
+    public void tweenAnim(View view) {
+        //补间动画
+        Intent intent = new Intent();
+        intent.setClass(this, TweenAnimationActivity.class);
+        startActivity(intent);
+    }
 }
