@@ -23,6 +23,12 @@
             android:onClick="tweenAnim"
             android:text="补间动画"/>
 
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:onClick="evaluator"
+            android:text="自定义插值器"/>
+
     </LinearLayout>
 
 

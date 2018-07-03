@@ -26,4 +26,15 @@ public class MainActivity extends AppCompatActivity {
         intent.setClass(this, TweenAnimationActivity.class);
         startActivity(intent);
     }
+
+    /**
+     * 自定义插值器
+     *
+     * @param view
+     */
+    public void evaluator(View view) {
+        Intent intent = new Intent();
+        intent.setClass(this, TypeEvaluatorActivity.class);
+        startActivity(intent);
+    }
 }

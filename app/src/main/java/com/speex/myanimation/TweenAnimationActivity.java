@@ -8,10 +8,14 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
+import android.view.animation.Interpolator;
+import android.view.animation.OvershootInterpolator;
 import android.view.animation.RotateAnimation;
 import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
+
+import com.speex.myanimation.Interpolator.DecelerateAccelerateInterpolator;
 
 public class TweenAnimationActivity extends AppCompatActivity {
     private String TAG = this.getClass().getSimpleName();
@@ -84,6 +88,8 @@ public class TweenAnimationActivity extends AppCompatActivity {
                 1, 0.5f,
                 Animation.RELATIVE_TO_SELF, 0.5F,
                 Animation.RELATIVE_TO_SELF, 0.5F);
+        Interpolator interpolator = new OvershootInterpolator();
+        animation.setInterpolator(interpolator);
         animation.setDuration(500);
         animation.setFillAfter(true);
         animation.setRepeatCount(5);
@@ -115,6 +121,8 @@ public class TweenAnimationActivity extends AppCompatActivity {
     public void rotate(View view) {
         //加载动画
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.rotate_anim_tween);
+        Interpolator interpolator = new DecelerateAccelerateInterpolator();
+        animation.setInterpolator(interpolator);
         //启动动画
         mImgTweenAnim.startAnimation(animation);
     }
@@ -223,7 +231,7 @@ public class TweenAnimationActivity extends AppCompatActivity {
         animationSet.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-                
+
             }
 
             @Override

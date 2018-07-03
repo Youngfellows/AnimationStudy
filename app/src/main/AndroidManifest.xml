@@ -22,6 +22,8 @@
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".TweenAnimationActivity">
         </activity>
+        <activity android:name=".TypeEvaluatorActivity">
+        </activity>
     </application>
 
 </manifest>
