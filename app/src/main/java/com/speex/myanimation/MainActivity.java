@@ -37,4 +37,15 @@ public class MainActivity extends AppCompatActivity {
         intent.setClass(this, TypeEvaluatorActivity.class);
         startActivity(intent);
     }
+
+    /**
+     * 属性动画
+     *
+     * @param view
+     */
+    public void propertyAnim(View view) {
+        Intent intent = new Intent();
+        intent.setClass(this, PropertyAnimtionActivity.class);
+        startActivity(intent);
+    }
 }

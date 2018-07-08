@@ -8,6 +8,7 @@ import android.graphics.Paint;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.WindowManager;
 
 import com.speex.myanimation.Interpolator.PointEvaluator;
 import com.speex.myanimation.bean.Point;
@@ -17,27 +18,34 @@ public class TranslateCircleView extends View {
     public static final float RADIUS = 70f;// 圆的半径 = 70
     private Point currentPoint;// 当前点坐标
     private Paint mPaint;// 绘图画笔
+    private int mWidth;
+    private int mHeight;
 
     public TranslateCircleView(Context context) {
         super(context);
-        init();
+        init(context);
     }
 
     // 构造方法(初始化画笔)
     public TranslateCircleView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        init();
+        init(context);
     }
 
     public TranslateCircleView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init();
+        init(context);
     }
 
-    private void init() {
+    private void init(Context context) {
         // 初始化画笔
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setColor(Color.BLUE);
+
+        //获取屏幕宽高
+        WindowManager manager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        mWidth = manager.getDefaultDisplay().getWidth();
+        mHeight = manager.getDefaultDisplay().getHeight();
     }
 
     // 复写onDraw()从而实现绘制逻辑
@@ -58,7 +66,8 @@ public class TranslateCircleView extends View {
             // (重点关注)将属性动画作用到View中
             // 步骤1:创建初始动画时的对象点  & 结束动画时的对象点
             Point startPoint = new Point(RADIUS, RADIUS);// 初始点为圆心(70,70)
-            Point endPoint = new Point(700, 1000);// 结束点为(700,1000)
+//            Point endPoint = new Point(700, 1000);// 结束点为(700,1000)
+            Point endPoint = new Point(mWidth - RADIUS, mHeight - RADIUS);// 结束点为(700,1000)
 
             // 步骤2:创建动画对象 & 设置初始值 和 结束值
             ValueAnimator anim = ValueAnimator.ofObject(new PointEvaluator(), startPoint, endPoint);
