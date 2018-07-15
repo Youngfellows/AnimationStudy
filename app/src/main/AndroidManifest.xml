@@ -28,6 +28,8 @@
         </activity>
         <activity android:name=".ValueAnimatorOfObjectActivity">
         </activity>
+        <activity android:name=".ColorActivity">
+        </activity>
     </application>
 
 </manifest>

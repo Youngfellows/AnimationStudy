@@ -1,5 +1,8 @@
 package com.speex.myanimation;
 
+import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -9,7 +12,10 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
+
+import com.speex.myanimation.utils.ViewWrapper;
 
 public class PropertyAnimtionActivity extends AppCompatActivity {
     private String TAG = this.getClass().getSimpleName();
@@ -116,5 +122,135 @@ public class PropertyAnimtionActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+
+    /**
+     * 透明度动画
+     *
+     * @param view
+     */
+    public void alpha(View view) {
+        ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(mImgCat, "alpha", 1f, 0.5f, 0f, 0.5f, 1f);
+        alphaAnimator.setDuration(500 * 2 * 2);
+        alphaAnimator.setRepeatMode(ValueAnimator.REVERSE);
+        alphaAnimator.setRepeatCount(6);
+        alphaAnimator.start();
+    }
+
+    /**
+     * 旋转动画
+     *
+     * @param view
+     */
+    public void rotationAnim(View view) {
+        ObjectAnimator rotationAnim = ObjectAnimator.ofFloat(mImgCat, "rotation", 0f, 360f);
+        rotationAnim.setDuration(500 * 2);
+        rotationAnim.setRepeatMode(ValueAnimator.RESTART);
+        rotationAnim.setRepeatCount(5);
+        rotationAnim.start();
+        rotationAnim.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                Log.i(TAG, "onAnimationStart: ");
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                Log.i(TAG, "onAnimationEnd: ");
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+                Log.i(TAG, "onAnimationCancel: ");
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+                Log.i(TAG, "onAnimationRepeat: ");
+            }
+        });
+    }
+
+    /**
+     * 平移动画
+     *
+     * @param view
+     */
+    public void translationX(View view) {
+        float currentTranslationX = mImgCat.getTranslationX();
+        ObjectAnimator translationAnim = ObjectAnimator.ofFloat(mImgCat, "translationX", currentTranslationX, 300, currentTranslationX);
+        translationAnim.setDuration(100 * 10);
+        translationAnim.setRepeatMode(ValueAnimator.REVERSE);
+        translationAnim.setRepeatCount(5);
+        translationAnim.start();
+    }
+
+    /**
+     * 平移动画
+     *
+     * @param view
+     */
+    public void translationY(View view) {
+        float currentTranslationY = mImgCat.getTranslationY();
+        ObjectAnimator translationAnim = ObjectAnimator.ofFloat(mImgCat, "translationY", currentTranslationY, 300, currentTranslationY);
+        translationAnim.setDuration(100 * 10);
+        translationAnim.setRepeatMode(ValueAnimator.REVERSE);
+        translationAnim.setRepeatCount(5);
+        translationAnim.start();
+    }
+
+    /**
+     * 缩放动画
+     *
+     * @param view
+     */
+    public void scaleAnim(View view) {
+        ObjectAnimator scaleAnimX = ObjectAnimator.ofFloat(mImgCat, "scaleX", 1f, 3f, 1f);
+        ObjectAnimator scaleAnimY = ObjectAnimator.ofFloat(mImgCat, "scaleY", 1f, 3f, 1f);
+        scaleAnimX.setRepeatMode(ValueAnimator.REVERSE);
+        scaleAnimY.setRepeatMode(ValueAnimator.REVERSE);
+        scaleAnimX.setRepeatCount(6);
+        scaleAnimY.setRepeatCount(6);
+
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.play(scaleAnimX).with(scaleAnimY);
+        animatorSet.setDuration(500 * 2);
+        animatorSet.setInterpolator(new AccelerateDecelerateInterpolator());
+        animatorSet.start();
+    }
+
+    /**
+     * 自定义对象属性实现动画效果
+     *
+     * @param view
+     */
+    public void customAnim(View view) {
+        Intent intent = new Intent();
+        intent.setClass(this, ColorActivity.class);
+        startActivity(intent);
+    }
+
+    /**
+     * 装饰模式包装原始对象实现动画
+     *
+     * @param view
+     */
+    public void decorativePattern(View view) {
+        //(方式1)获取控件的宽高
+        int w = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        int h = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        mImgCat.measure(w, h);
+        int width = mImgCat.getMeasuredWidth();
+        int height = mImgCat.getMeasuredHeight();
+        Log.i(TAG, "1 width: " + width + " ,height: " + height);
+
+        // 创建包装类,并传入动画作用的对象
+        ViewWrapper wrapper = new ViewWrapper(mImgCat);
+
+        ObjectAnimator animator = ObjectAnimator.ofInt(wrapper, "width", width, width * 2, width / 2);
+        animator.setDuration(300 * 1);
+        animator.setRepeatMode(ValueAnimator.REVERSE);
+        animator.setRepeatCount(6);
+        animator.start();
+    }
 
 }
