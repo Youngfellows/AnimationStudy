@@ -1,6 +1,7 @@
 package com.speex.myanimation;
 
 import android.animation.Animator;
+import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
@@ -252,5 +253,70 @@ public class PropertyAnimtionActivity extends AppCompatActivity {
         animator.setRepeatCount(6);
         animator.start();
     }
+
+    /**
+     * 组合动画
+     * AnimatorSet.play(Animator anim)   ：播放当前动画
+     * AnimatorSet.after(long delay)   ：将现有动画延迟x毫秒后执行
+     * AnimatorSet.with(Animator anim)   ：将现有动画和传入的动画同时执行
+     * AnimatorSet.after(Animator anim)   ：将现有动画插入到传入的动画之后执行
+     * AnimatorSet.before(Animator anim) ：  将现有动画插入到传入的动画之前执行
+     *
+     * @param view
+     */
+    public void animationSet(View view) {
+        //(方式1)获取控件的宽高
+        int w = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        int h = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        mImgCat.measure(w, h);
+        int width = mImgCat.getMeasuredWidth();
+        int height = mImgCat.getMeasuredHeight();
+        Log.i(TAG, "1 width: " + width + " ,height: " + height);
+
+        // 步骤1：设置需要组合的动画效果
+        ObjectAnimator translation = ObjectAnimator.ofFloat(mImgCat, "translationX", width, width * 2, width);
+        ObjectAnimator rotate = ObjectAnimator.ofFloat(mImgCat, "rotation", 0f, 360f);
+        ObjectAnimator alpha = ObjectAnimator.ofFloat(mImgCat, "alpha", 1f, 0f, 1f);
+        ObjectAnimator scaleX = ObjectAnimator.ofFloat(mImgCat, "scaleX", 1f, 2f, 1f);
+        ObjectAnimator scaleY = ObjectAnimator.ofFloat(mImgCat, "scaleY", 1f, 2f, 1f);
+
+        // 步骤2：创建组合动画的对象
+        AnimatorSet animatorSet = new AnimatorSet();
+
+        // 步骤3：根据需求组合动画
+//        animatorSet.play(translation).with(rotate).with(alpha).with(scaleX).with(scaleY);
+        animatorSet.play(rotate).with(alpha).with(scaleX).with(scaleY);
+//        animatorSet.playSequentially(translation, rotate, alpha, scaleX, scaleY);
+        animatorSet.setDuration(2000);
+        animatorSet.start();
+    }
+
+    /**
+     * XML组合属性动画
+     *
+     * @param view
+     */
+    public void animationSet2(View view) {
+        Animator animator = AnimatorInflater.loadAnimator(this, R.animator.anim_set_properity);
+        animator.setTarget(mImgCat);
+        animator.start();
+    }
+
+
+    /**
+     * 组合动画3
+     *
+     * @param view
+     */
+    public void animationSet3(View view) {
+        ObjectAnimator moveIn = ObjectAnimator.ofFloat(mImgCat, "translationX", -500f, 0f);
+        ObjectAnimator rotate = ObjectAnimator.ofFloat(mImgCat, "rotation", 0f, 360f);
+        ObjectAnimator fadeInOut = ObjectAnimator.ofFloat(mImgCat, "alpha", 1f, 0f, 1f);
+        AnimatorSet animSet = new AnimatorSet();
+        animSet.play(rotate).with(fadeInOut).after(moveIn);
+        animSet.setDuration(5000);
+        animSet.start();
+    }
+
 
 }
