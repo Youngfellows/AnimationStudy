@@ -318,5 +318,14 @@ public class PropertyAnimtionActivity extends AppCompatActivity {
         animSet.start();
     }
 
+    /**
+     * ViewPropertyAnimation动画
+     *
+     * @param view
+     */
+    public void viewPropertyAnimation(View view) {
+        mImgCat.animate().x(500).y(500).alpha(0).setDuration(2 * 1000);
+    }
+
 
 }

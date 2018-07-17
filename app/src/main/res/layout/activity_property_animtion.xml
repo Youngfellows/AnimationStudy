@@ -104,6 +104,11 @@
                 android:layout_height="wrap_content"
                 android:onClick="animationSet3"
                 android:text="组合动画3"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="viewPropertyAnimation"
+                android:text="ViewProperty动画"/>
         </LinearLayout>
 
     </LinearLayout>
