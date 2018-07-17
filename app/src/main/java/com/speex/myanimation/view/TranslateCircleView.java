@@ -127,10 +127,10 @@ public class TranslateCircleView extends View {
         // TODO: 2018/7/17 设置颜色过度动画
         ObjectAnimator colorAnimator = ObjectAnimator.ofObject(this, "color", new ColorEvaluator(),
                 "#0000ff", "#ff0000");
-        ObjectAnimator rotateAnim = ObjectAnimator.ofFloat(this, "rotation", 0f, 360f);
+//        ObjectAnimator rotateAnim = ObjectAnimator.ofFloat(this, "rotation", 0f, 360f);
 
         AnimatorSet animatorSet = new AnimatorSet();
-        animatorSet.play(anim).with(colorAnimator).with(rotateAnim);
+        animatorSet.play(anim).with(colorAnimator);
         animatorSet.setDuration(5 * 1000);
         animatorSet.start();
     }
